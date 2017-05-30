@@ -3,7 +3,7 @@ import javax.swing.border.*;
 import java.util.Random; 
 import java.awt.*;
 
-public class Assign5 extends JFrame
+public class Assign5_3 extends JFrame
 {
 
    static int NUM_CARDS_PER_HAND = 7;
@@ -12,7 +12,7 @@ public class Assign5 extends JFrame
    static JLabel[] humanLabels = new JLabel[NUM_CARDS_PER_HAND];  
    static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS]; 
    static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS]; 
-   
+
    static Card generateRandomCard()
    {
       Deck myDeck = new Deck();
@@ -305,17 +305,17 @@ class Hand {
       myCards = new Card[MAX_CARDS];
       numCards = 0;
    }
-   
+
    public Card[] getHand()
    {
       Card[] myHand; 
       int cardQty = this.numCards;
       myHand = new Card[cardQty];
-      for (int i : cardQty)
+      for (int i = 0; i< this.numCards; i++)
       {
          myHand[i] = this.myCards[i];
       }
-      reurn myHand[];
+      return myHand;
    }
 
    // Remove all cards from the hand
@@ -431,16 +431,6 @@ class Deck {
       }
    } 
 
-   // Decrements card from the deck
-   public Card dealCard(){
-      if ( topCard != 0 )
-      {
-         topCard--;
-      }
-
-      return cards[topCard];
-   }
-
    // Accessor for topCard
    public int getTopCard(){
       return topCard;
@@ -481,5 +471,89 @@ class Deck {
          masterPack[13*y+12].set( 'K', cardSuit );
       }
    }
-}
 
+
+   //Removes a card from the deck if it is valid
+   boolean addCard(Card card)
+   {
+      boolean isValidCard = false;
+      int count = 0;
+      int index = 0;
+
+      // Checks to see if there are any occurances of the card in the deck
+      for ( int i = this.topCard; i <= this.numPacks*53; i++ )
+      {
+         if ( cards[i].getValue() == card.getValue() && cards[i].getSuit() == card.getSuit())
+         {
+            count++;
+            index = i;
+         }
+      }
+
+      // If the card occurs more than zero times and less than or equal to the number of packs, remove card
+      if ( count > 0 )
+      {
+         this.topCard++;
+         cards[index] = new Card( cards[this.topCard].getValue(), cards[this.topCard].getSuit() );
+         cards[this.topCard] = new Card(card.getValue(), card.getSuit());
+         isValidCard = true;
+      }
+      return isValidCard;
+   }
+
+
+   // Removes a card from the deck if it is valid
+   boolean removeCard(Card card)
+   {
+      boolean isValidCard = false;
+      int count = 0;
+      int index = 0;
+
+      // Checks to see if there are any occurances of the card in the deck
+      for ( int i = 0; i <= this.topCard; i++ )
+      {
+         if ( cards[i].getValue() == card.getValue() && cards[i].getSuit() == card.getSuit())
+         {
+            count++;
+            index = i;
+         }
+      }
+
+      // If the card occurs more than zero times and less than or equal to the number of packs, remove card
+      if ( count <= numPacks && count > 0 )
+      {
+         cards[index] = new Card( cards[this.topCard].getValue(), cards[this.topCard].getSuit() );
+         cards[this.topCard] = new Card(card.getValue(), card.getSuit());
+         this.topCard--;
+         isValidCard = true;
+      }
+      return isValidCard;
+   }
+
+
+   // Returns the deck back to it’s original order
+   void sort() 
+   {
+      this.init(this.numPacks);
+   }
+
+   // Accessor for number of cards
+   int getNumCards()
+   {
+      return this.topCard + 1;
+   }
+
+   /////////////////////////////////REVISED DEAL CARD/////////////////////////////////////////////////
+   // Returns top Card and removes from deck
+   public Card dealCard()
+   {
+      Card cardToDeal = new Card();
+      if ( this.topCard > 0 && this.topCard <= MAX_CARDS )
+      {
+         cardToDeal.set(cards[this.topCard].getValue(), cards[this.topCard].getSuit());
+         this.removeCard(cardToDeal);
+      }
+
+      return cardToDeal;
+   }
+}
