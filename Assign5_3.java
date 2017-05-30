@@ -1,10 +1,9 @@
-
 import javax.swing.*;
 import javax.swing.border.*;
 import java.util.Random; 
 import java.awt.*;
 
-public class Assign5 extends JFrame
+public class assign8 extends JFrame
 {
 
 	 static int NUM_CARDS_PER_HAND = 7;
@@ -14,7 +13,7 @@ public class Assign5 extends JFrame
 	   static JLabel[] playedCardLabels = new JLabel[NUM_PLAYERS];
 	   static JLabel[] playLabelText = new JLabel[NUM_PLAYERS];
 
-	   static Card generateRandomCard()
+	   static Card InspectCard()
 	   {
 	      char suit;
 	      char val;
@@ -50,6 +49,7 @@ public class Assign5 extends JFrame
 	   public static void main(String[] args)
 	   {
 	      int k;
+	      Icon tempIcon;
 	      
 	      int numPacksPerDeck = 1;
 	      int numJokersPerPack = 0;
@@ -92,7 +92,7 @@ public class Assign5 extends JFrame
 	      // and two random cards in the play region (simulating a computer/hum ply)
 	      for(k = 0; k < NUM_PLAYERS; k++)
 	         playedCardLabels[k] = new JLabel(GUICard.getIcon(
-	               generateRandomCard()));
+	               InspectCard()));
 
 	      playLabelText[0] = new JLabel("Computer", 0);
 	      playLabelText[1] = new JLabel("You", 0);
