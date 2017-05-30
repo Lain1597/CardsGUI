@@ -12,42 +12,99 @@ public class Assign5 extends JFrame
    static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS]; 
    static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS]; 
 
-   public static void main(String[] args)
-   {
-      int k;
-      Icon tempIcon;
+   
+	   static Card generateRandomCard()
+	   {
+	      char suit;
+	      char val;
 
-      // establish main frame in which program will run
-      CardTable myCardTable 
-      = new CardTable("CardTable", NUM_CARDS_PER_HAND, NUM_PLAYERS);
-      myCardTable.setSize(800, 600);
-      myCardTable.setLocationRelativeTo(null);
-      myCardTable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	      int suitSelector;
+	      int valSelector;
 
-      // show everything to the user
-      myCardTable.setVisible(true);
+	      // get random suit and value
+	      suitSelector = (int) (Math.random() * 4);
+	      valSelector = (int) (Math.random() * 13);
 
-      // CREATE LABELS ----------------------------------------------------
-      GUICard.loadCardIcons();
-      Card myCard = new Card('8', Card.Suit.CLUBS);
-      JLabel label1 = new JLabel(GUICard.getIcon(myCard));
-      JLabel label2 = new JLabel(GUICard.getIcon(myCard));
-      JLabel label3 = new JLabel(GUICard.getIcon(myCard));
+	      // pick suit
+	      suit = turnIntIntoSuit(suitSelector);
+	      val = turnIntIntoVal(valSelector);
 
-      // ADD LABELS TO PANELS -----------------------------------------
-      myCardTable.playerHand.add(label1);
-      myCardTable.playerHand.add(label2);
-      myCardTable.playerHand.add(label3);
+	      return new Card(val, suit);
+	   }
 
-      // and two random cards in the play region (simulating a computer/hum ply)
-      //code goes here ...
+	   static char turnIntIntoSuit(int suitSelector)
+	   {
+	      if(suitSelector >= 0 && suitSelector <= 3)
+	         return Card.cardValues[suitSelector];
+	      return Card.cardValues[0];//returning default suit clubs.
+	   }
 
-      // show everything to the user
-      myCardTable.setVisible(true);
+	   static char turnIntIntoVal(int valSelector)
+	   {
+	      if(valSelector >= 0 && valSelector <= 13)
+	         return Card.valueRanks[valSelector];
+	      return Card.valueRanks[12];//returning default value A.
+	   }
 
-   }
+	   public static void main(String[] args)
+	   {
+	      int k;
+	      Icon tempIcon;
+	     
 
-}
+	      CardGameFramework toyGame = new CardGameFramework();
+	          
+	      toyGame.deal();
+
+	      // establish main frame in which program will run
+	      CardTable myCardTable
+	      = new CardTable("CS 1B CardTable", NUM_CARDS_PER_HAND, NUM_PLAYERS);
+	      myCardTable.setSize(800, 600);
+	      myCardTable.setLocationRelativeTo(null);
+	      myCardTable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	      // show everything to the user
+	      myCardTable.setVisible(true);
+
+
+	      // CREATE LABELS ----------------------------------------------------
+	      for(k = 0; k < NUM_CARDS_PER_HAND; k++)
+	         humanLabels[k] = new JLabel(GUICard.getIcon(
+	               toyGame.getHand(1).inspectCard(k)));
+
+	      for(k = 0; k < NUM_CARDS_PER_HAND; k++)
+	         computerLabels[k] = new JLabel(GUICard.getBackCardIcon());
+
+
+	      // ADD LABELS TO PANELS -----------------------------------------
+	      for(k = 0; k < NUM_CARDS_PER_HAND; k++)
+	         myCardTable.playerHand.add(humanLabels[k]);
+
+	      for(k = 0; k < NUM_CARDS_PER_HAND; k++)
+	         myCardTable.computerHand.add(computerLabels[k]);
+
+	      // and two random cards in the play region (simulating a computer/hum ply)
+	      for(k = 0; k < NUM_PLAYERS; k++)
+	         playedCardLabels[k] = new JLabel(GUICard.getIcon(
+	               generateRandomCard()));
+
+	      playLabelText[0] = new JLabel("Computer", 0);
+	      playLabelText[1] = new JLabel("You", 0);
+
+	      //Adding cards to the play area panel.
+	      for(k = 0; k < NUM_PLAYERS; k++)
+	      {
+	         myCardTable.playing.add(playedCardLabels[k]);
+	         myCardTable.playing.add(playLabelText[k]);
+	      }
+	      //Adding lables to the play area panel under the cards.
+	      myCardTable.playing.add(playLabelText[0]);
+	      myCardTable.playing.add(playLabelText[1]);
+
+	      // show everything to the user
+	      myCardTable.setVisible(true);
+	   }
+	   }
 
 //This class will control the positioning of the panels and cards of the GUI. 
 class CardTable extends JFrame {
