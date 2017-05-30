@@ -4,7 +4,7 @@ import javax.swing.border.*;
 import java.util.Random; 
 import java.awt.*;
 
-public class assign8 extends JFrame
+public class Assign5 extends JFrame
 {
 
 	 static int NUM_CARDS_PER_HAND = 7;
