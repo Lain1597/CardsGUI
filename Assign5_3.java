@@ -2,7 +2,7 @@
  * 
  * 
  * 
- * Description:  This program simulates High-Card Flush.  */
+ * Description:  This program simulates High-Card .  */
 
 
 import javax.swing.*;
