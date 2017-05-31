@@ -24,7 +24,7 @@ public static int NUM_PLAYERS = 2;         // Player 0 will represent Computer a
 public static int NUM_CARDS_PER_HAND = 7;
 
 
-   public static void main(String[] args)
+ public static void main(String[] args)
    {
 
       
@@ -69,22 +69,30 @@ public static int NUM_CARDS_PER_HAND = 7;
             BorderFactory.createTitledBorder("Playing Area"));
       myCardTable.playing.setLayout(new GridLayout(3, 2));
 
-      
-      // Create labels within computerHand panel
-      /*
-      computerHighCard.set(highCardGame.getHand(0).inspectCard(0).getValue(), highCardGame.getHand(0).inspectCard(0).getSuit());
+      // Create labels within Computer hand
       for (i = 0; i < NUM_CARDS_PER_HAND; i++)
       {
          label = new JLabel(GUICard.getBackCardIcon());
          myCardTable.computerHand.add(label);
-         
-         // Get Computer's high card
-         if (highCardGame.getHand(0).inspectCard(i).)
-         highCardGame.getHand(0).inspectCard(i);
       }
-      */
       
-       // Get Computer's high card
+      
+      // Create labels within playerHand panel
+      int playerNum = 1;
+
+      for (i = 0; i < NUM_CARDS_PER_HAND; i++)
+      {
+         label = new JLabel(GUICard.getIcon(highCardGame.getHand(playerNum).inspectCard(i)));
+         myCardTable.playerHand.add(label);
+      }
+     
+      // Get user input for card to play 
+      Scanner key = new Scanner(System.in);
+      int playerChoice = key.nextInt();
+      
+    
+
+      // Get Computer's high card
       int hcIndex = 0;
       computerHighCard.set(highCardGame.getHand(0).inspectCard(0).getValue(), highCardGame.getHand(0).inspectCard(0).getSuit());
       highCardGame.getHand(0).sort();
@@ -103,31 +111,35 @@ public static int NUM_CARDS_PER_HAND = 7;
       
       
       ///////////////////////////////////////////////////////
+         
+      int compScore = 0;
+      int playerScore = 0;
       
-      
-
-      // Create labels within playerHand panel
-      int playerNum = 1;
-
-      for (i = 0; i < NUM_CARDS_PER_HAND; i++)
+      if(Card.highCard(highCardGame.getHand(0).playCard(hcIndex), highCardGame.getHand(1).playCard(playerChoice)))   
       {
-         label = new JLabel(GUICard.getIcon(highCardGame.getHand(playerNum).inspectCard(i)));
-         myCardTable.playerHand.add(label);
+         playerScore++;
       }
+      else
+      {
+         compScore++;
+      }
+      System.out.println("Computer Score : " + compScore);
+      System.out.println("Player Score : " + playerScore);
       
-      // Create labels within playing area panel
-      label = new JLabel(GUICard.getIcon(highCardGame.getHand(0).inspectCard(0)));
+      label = new JLabel(GUICard.getIcon(highCardGame.getHand(0).playCard(hcIndex)));
       myCardTable.playing.add(label);
-      
-      label = new JLabel(GUICard.getIcon(highCardGame.getHand(1).inspectCard(0)));
+         
+      label = new JLabel(GUICard.getIcon(highCardGame.getHand(1).playCard(playerChoice)));
       myCardTable.playing.add(label);
-      
       JLabel labelTitle;
       labelTitle = new JLabel("Computer", JLabel.CENTER);
       myCardTable.playing.add(labelTitle);
       
       labelTitle = new JLabel("You", JLabel.CENTER);
       myCardTable.playing.add(labelTitle);
+      
+      
+    
       
 
       // Show window
