@@ -5,6 +5,7 @@ Phase 2: Encapsulating Layount and Icons into CardTable and GUICard Classes
 
 - CardTable: This class will control the positioning of the panels and cards of the GUI.
 - GUICard: This class manages the reading and building of the card image Icons.
+- Card, Hand, Deck: Adjusted classes from Assignment 3. 
 
 */
 
@@ -179,21 +180,30 @@ class CardTable extends JFrame {
 } // End of CardTable class
 
 // ----------------------------------------------------------------------------------------------------------
+
+/** 
+- Read the image files and store them in a static Icon 2-D array to facilitate addressing the value and suit of a Card in order get its Icon.
+- Convert from chars and suits to ints, and back again, in order to find the Icon for any given Card object.
+*/
 class GUICard{
 
+	 // Member Variables: 
    private static Icon[][] iconCards = new ImageIcon[14][4];  // Holds values for icons
    private static Icon iconBack;                              // Holds value for back of card icon
    private static boolean iconsLoaded = false;                // Flag to check if icons are loaded
  
+   // Generates the image Icon array from files:
    static public void loadCardIcons() {
    
       iconBack = new ImageIcon("images/BK.gif");
  
+ 			// Storing Icons in a 2-D array. 
       for(int col = 0; col < 14; col++) {
          for(int row = 0; row < 4; row++) {
             iconCards[col][row] = new ImageIcon("images/" + getStrValue(col) + getCharSuit(row) + ".gif");
          }
       }
+      
       iconsLoaded = true;
    }
  
@@ -231,12 +241,14 @@ class GUICard{
 		    default: return 'S';
       }
    }
-   
+    
+   // Takes a Card object from the client, and returns the Icon for that card.  
    static public Icon getIcon(Card card) {
    
       return iconCards[valueAsInt(card)][suitAsInt(card)];
    }
- 
+   
+   // Returns the card back image.
    static public Icon getBackCardIcon(){
    
       return iconBack;
