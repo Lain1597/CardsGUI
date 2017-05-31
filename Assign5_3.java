@@ -2,7 +2,7 @@
  * 
  * 
  * 
- * Description:  This program simulates High-Card .  */
+ * Description:  This program simulates High-Card Flush.  */
 
 
 import javax.swing.*;
@@ -23,6 +23,7 @@ public class Assign5_3 extends JFrame
 public static int NUM_PLAYERS = 2;         // Player 0 will represent Computer and Player 1 will represent user
 public static int NUM_CARDS_PER_HAND = 7;
 
+
    public static void main(String[] args)
    {
 
@@ -33,7 +34,8 @@ public static int NUM_CARDS_PER_HAND = 7;
       Card[] unusedCardsPerPack = new Card[numPacksPerDeck*(56 + 4*numJokersPerPack)];  
       JLabel label;
       int i = 0;
-      int bank = 500;
+
+      Card computerHighCard = new Card();
       
       // Create an instance of a game
       CardGameFramework highCardGame = new CardGameFramework( 
@@ -66,13 +68,25 @@ public static int NUM_CARDS_PER_HAND = 7;
       myCardTable.playing.setBorder(
             BorderFactory.createTitledBorder("Playing Area"));
       myCardTable.playing.setLayout(new GridLayout(3, 2));
+
       
       // Create labels within computerHand panel
+      /*
+      computerHighCard.set(highCardGame.getHand(0).inspectCard(0).getValue(), highCardGame.getHand(0).inspectCard(0).getSuit());
       for (i = 0; i < NUM_CARDS_PER_HAND; i++)
       {
          label = new JLabel(GUICard.getBackCardIcon());
          myCardTable.computerHand.add(label);
+         
+         // Get Computer's high card
+         if (highCardGame.getHand(0).inspectCard(i).)
+         highCardGame.getHand(0).inspectCard(i);
       }
+      */
+      
+      Card.highCard(highCardGame.getHand(0).inspectCard(0), highCardGame.getHand(1).inspectCard(0));
+      
+      
 
       // Create labels within playerHand panel
       int playerNum = 1;
@@ -97,7 +111,6 @@ public static int NUM_CARDS_PER_HAND = 7;
       labelTitle = new JLabel("You", JLabel.CENTER);
       myCardTable.playing.add(labelTitle);
       
-      myCardTable.playing.add(endButton);
 
       // Show window
       myCardTable.setVisible(true);  
@@ -208,7 +221,7 @@ class GUICard
       case 1: return 'D';
       case 2: return 'H';
       case 3: return 'S';
-      default: return 'S';
+      default: return 'M';
       }
    }
    static public Icon getIcon(Card card) 
@@ -272,6 +285,62 @@ class Card
    public static char[] valueRanks = {'A', '2', '3', '4', '5', '6', '7', '8',
             '9', 'T', 'J', 'Q', 'K', 'X'};
 
+   public static boolean highCard ( Card cardComp, Card cardPlay )
+   {
+      int cardValComp = 0;
+      int cardValPlay = 0;
+      int cardSuitComp = 0;
+      int cardSuitPlay = 0;
+      boolean won = false;
+
+      
+      for(int i = 0; i < 14; i++ )
+      {
+          if(cardComp.getValue() == Card.valueRanks[i])
+          {
+             cardValComp = i;
+          }
+          if(cardPlay.getValue() == Card.valueRanks[i])
+          {
+             cardValPlay = i;
+          }
+      }
+
+      if( cardValComp > cardValPlay)
+      {
+         won = false;
+      }
+      else if (cardValComp <= cardValPlay)
+      {
+         won = true;
+      }
+      else if (cardValComp == cardValPlay)
+      {
+         for(int k = 0; k<4; k++)
+         {
+            if(cardComp.getSuit() ==Card.Suit.values()[k] )
+            {
+               cardSuitComp = k;
+            }
+            if(cardPlay.getSuit() ==Card.Suit.values()[k] )
+            {
+               cardSuitPlay = k;
+            }
+         }
+         if(cardSuitComp > cardSuitPlay)
+         {
+            won = false;
+         }
+         else
+         {
+            won = true;
+         }
+      }
+      System.out.println(won);
+      return won;
+   }
+
+   
    // Default Constructor
    Card()
    {
@@ -872,5 +941,5 @@ class CardGameFramework
       return hand[playerIndex].takeCard(deck.dealCard());
    }
    
- 
+
 }
