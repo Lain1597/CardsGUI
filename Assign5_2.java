@@ -11,7 +11,7 @@ import javax.swing.border.*;
 import java.util.Random;
 import java.awt.*;
 
-public class Assign5_P3 extends JFrame {
+public class Assign5_2 extends JFrame {
 
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
