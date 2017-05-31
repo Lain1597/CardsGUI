@@ -84,7 +84,25 @@ public static int NUM_CARDS_PER_HAND = 7;
       }
       */
       
-      Card.highCard(highCardGame.getHand(0).inspectCard(0), highCardGame.getHand(1).inspectCard(0));
+       // Get Computer's high card
+      int hcIndex = 0;
+      computerHighCard.set(highCardGame.getHand(0).inspectCard(0).getValue(), highCardGame.getHand(0).inspectCard(0).getSuit());
+      highCardGame.getHand(0).sort();
+   
+         for (i = 0; i < NUM_CARDS_PER_HAND; i++)     
+         {
+            if (Card.highCard(highCardGame.getHand(0).inspectCard(i), highCardGame.getHand(1).inspectCard(playerChoice)) == false )
+            {
+               computerHighCard.set(highCardGame.getHand(0).inspectCard(i).getValue(), highCardGame.getHand(0).inspectCard(i).getSuit());
+               System.out.println(i);
+               hcIndex = i;
+               break;
+            }
+         }
+         System.out.println(computerHighCard.toString());
+      
+      
+      ///////////////////////////////////////////////////////
       
       
 
