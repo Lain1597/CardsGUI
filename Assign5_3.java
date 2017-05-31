@@ -66,13 +66,6 @@ public static int NUM_CARDS_PER_HAND = 7;
       myCardTable.playing.setBorder(
             BorderFactory.createTitledBorder("Playing Area"));
       myCardTable.playing.setLayout(new GridLayout(3, 2));
-
-      
-      // Create exit button
-      JButton endButton = new JButton("Click to end program.");
-      EventListener buttonEar = new EventListener();
-      endButton.addActionListener(buttonEar);
-      myCardTable.add(endButton);
       
       // Create labels within computerHand panel
       for (i = 0; i < NUM_CARDS_PER_HAND; i++)
@@ -879,11 +872,5 @@ class CardGameFramework
       return hand[playerIndex].takeCard(deck.dealCard());
    }
    
-   public class EndingListener implements ActionListener
-   {
-      public void actionPerformed(ActionEvent e)
-      {
-         System.exit(0);
-      }
-   }
+ 
 }
