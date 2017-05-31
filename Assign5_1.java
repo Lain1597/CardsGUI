@@ -18,7 +18,7 @@ public class Assign5_1 {
    // Creates filenames in loop.
    // Reads in the filenames and instantiate icons in the array. 
    static void loadCardIcons() {
-]
+
       short index = 0;
 
       for (short j = 0; j < 4; j++) {
