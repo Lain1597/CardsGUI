@@ -402,7 +402,62 @@ class Card
          return "[" + value + ", " + suit +"]";
       }
    }
+   
+  // Returns tests the value of two cars
+  public static boolean highCard ( Card cardComp, Card cardPlay )
+   {
+      int cardValComp = 0;
+      int cardValPlay = 0;
+      int cardSuitComp = 0;
+      int cardSuitPlay = 0;
+      boolean won = false;
 
+      
+      for(int i = 0; i < 14; i++ )
+      {
+          if(cardComp.getValue() == Card.valueRanks[i])
+          {
+             cardValComp = i;
+          }
+          if(cardPlay.getValue() == Card.valueRanks[i])
+          {
+             cardValPlay = i;
+          }
+      }
+
+      if( cardValComp > cardValPlay)
+      {
+         won = false;
+      }
+      else if (cardValComp <= cardValPlay)
+      {
+         won = true;
+      }
+      else if (cardValComp == cardValPlay)
+      {
+         for(int k = 0; k<4; k++)
+         {
+            if(cardComp.getSuit() ==Card.Suit.values()[k] )
+            {
+               cardSuitComp = k;
+               
+            }
+            if(cardPlay.getSuit() ==Card.Suit.values()[k] )
+            {
+               cardSuitPlay = k;
+            }
+         }
+         if(cardSuitComp <= cardSuitPlay)
+         {
+            won = false;
+         }
+         else
+         {
+            won = true;
+         }
+      }
+      return won;
+   }
    // Returns whether a card is equivalent to the source card
    public boolean equals( Card card )
    {
