@@ -80,7 +80,7 @@ public class Assign5_3 extends JFrame
       computerHighCard.set(highCardGame.getHand(0).inspectCard(0).getValue(), highCardGame.getHand(0).inspectCard(0).getSuit());
       highCardGame.getHand(0).sort();
 
-      // Create labels within playerHand panel
+      // Create buttons within playerHand panel
       int playerNum = 1;
 
       for (i = 0; i < NUM_CARDS_PER_HAND; i++)
@@ -89,6 +89,7 @@ public class Assign5_3 extends JFrame
          myCardTable.playerHand.add(humanCardButtons[i]);
       }
 
+      //Implement ActionListen to remove buttons and call playCards
       for (int k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
          humanCardButtons[k].addActionListener(new ActionListener()
@@ -119,12 +120,12 @@ public class Assign5_3 extends JFrame
       labelTitle[1] = new JLabel("Your Score: " + playerScore, JLabel.CENTER);
       myCardTable.playing.add(labelTitle[1]);
       
+      //Place holders for playing area
       playedCard[0] = new JLabel(GUICard.getBackCardIcon());
       playedCard[1] = new JLabel(GUICard.getBackCardIcon());
       myCardTable.playing.add(playedCard[0]);
       myCardTable.playing.add(playedCard[1]);
       
-
       // Show window
       myCardTable.setVisible(true); 
    }
@@ -138,14 +139,16 @@ public class Assign5_3 extends JFrame
          myCardTable.playing.remove(playedCard[1]);
          myCardTable.playing.remove(labelTitle[0]);
          myCardTable.playing.remove(labelTitle[1]);
-         
       }
       
+      // Determine the first highest card for the computer
+      // If no high cards are available, selects the lowest card
       generateCard(highCardGame.getHand(0), x);
 
-      //Remove Card from each players hand
+      //Remove cards from Computer's hand
       myCardTable.computerHand.remove(compHand[hcIndex]);
       
+      //Determine the winner of the round
       if(Card.highCard(highCardGame.getHand(0).inspectCard(hcIndex), highCardGame.getHand(1).inspectCard(x)))   
       {
          playerScore++;
@@ -155,6 +158,7 @@ public class Assign5_3 extends JFrame
          compScore++;
       }
 
+      // Updates scores to player titles
       labelTitle[0] = new JLabel("Computer Score: " + compScore, JLabel.CENTER);
       myCardTable.playing.add(labelTitle[0]);
 
@@ -168,7 +172,7 @@ public class Assign5_3 extends JFrame
       playedCard[1] = new JLabel(GUICard.getIcon(highCardGame.getHand(1).inspectCard(x)));
       myCardTable.playing.add(playedCard[1]);
 
-      
+      // If all cards have been used, remove played cards and display winning statement
       if (playedIndex[0] == true && playedIndex[1] == true && playedIndex[2] == true && 
             playedIndex[3] == true && playedIndex[4] == true && playedIndex[5] == true && playedIndex[6] == true)
       {
@@ -194,6 +198,8 @@ public class Assign5_3 extends JFrame
       }
    }
 
+   //Determines the next highest card for the Computer to play
+   //If no high cards are available, selects the lowest card
    public static void generateCard(Hand computerHand, int playerChoice)
    {
       for (int i = 0; i < NUM_CARDS_PER_HAND; i++)     
