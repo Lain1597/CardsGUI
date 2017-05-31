@@ -3,13 +3,10 @@ Team Logistic Solutions:  Danh Huynh, Brenna Eckel, Steven Hunt, Guadalupe Alejo
 Phase 3: Adding CardGameFramework and creating the game "High Card"
 */
 
-
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.JFrame;
 import javax.swing.JButton;
-
-import java.util.EventListener;
 import java.util.Random; 
 import java.awt.*;
 import java.awt.event.ActionListener;
