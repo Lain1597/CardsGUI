@@ -457,33 +457,42 @@ class Hand {
 	}
 
 	// Adds a card to the nest available position in the myCards array.
-	public boolean takeCard( Card card ) {
-	
-		boolean valid;
-
-		if ( numCards >= MAX_CARDS ) {
-		
-			valid = false;
-		}
-
-		else {
-		
-			myCards[numCards] = card;
-			numCards++;
-			valid = true;
-		}
-		
-		return valid;
-	}
-
+public boolean takeCard( Card card ) {
+      Card receivedCard = new Card();
+      if (receivedCard.set(card.getValue(), card.getSuit()))
+      {
+         myCards[numCards] = receivedCard;
+         numCards++;
+         return true;
+      }
+      return false;
+   }
 	// This method will remove and return the top card in the array
 	public Card playCard() {
-	      
-		Card topCard =  myCards[numCards - 1];
-		myCards[numCards - 1] = null; 
-		numCards-- ;
-		return topCard;
-	}
+      {
+
+         Card topCard = myCards[numCards - 1];
+
+         myCards[numCards - 1] = null;
+
+         numCards-- ;
+
+         return topCard;
+
+      }
+
+      public Card playCard(int cardIndex)
+
+      {
+
+         Card topCard = myCards[cardIndex];
+
+         myCards[cardIndex] = null;
+
+         numCards--;
+
+         return topCard;
+      }
 
 	// Returns the string built up by the Stringizer
 	public String toString() {
@@ -511,7 +520,15 @@ class Hand {
 	//Returns a card at a given index
 	public Card inspectCard( int k ) {
 	
-		return myCards[k];
+         if (k >= 0 && k < myCards.length && myCards[k] != null)
+         {
+            return myCards[k];
+         }
+
+         Card errorCard = new Card();
+         errorCard.set(' ', null); 
+         return errorCard; 
+		
 	}   
 	
 	//---------------------NEW STUFF FOR HAND-------------------
@@ -538,26 +555,42 @@ class Deck {
 	private int topCard; 
 	private int numPacks; 
 
-	// Constructor : Populates the arrays and assigns initial values to members. 
-	public Deck ( int numPacks ) {
-		allocateMasterPack (); // Lupe's Method (needs to be called in constructor).  
-		this.cards = masterPack; 
-		init ( numPacks );
-		topCard = 52*numPacks;
-	}
+	 // Constructor : Populates the arrays and assigns initial values to members. 
+      public Deck ( int numPacks ) {
+         allocateMasterPack (); // Lupe's Method (needs to be called in constructor).  
+         init(numPacks);       
+      }
 
-	// Overloaded Constructor : If no parameters are passed, 1 pack is assumed (default). 
-	public Deck () {
-		this(1); 
-	}
+      // Overloaded Constructor : If no parameters are passed, 1 pack is assumed (default). 
+      public Deck () {
 
-	// Re-populates Card array with 52 * numPacks. ( Doesn't re-populate masterPack ). 
-	void init ( int numPacks ) {
-		this.cards = masterPack;
-		this.numPacks = numPacks;
-		this.topCard = 52*numPacks;
-	}
-  
+         allocateMasterPack();
+         init(1); 
+      }
+
+
+      public int getTopCard()
+      {       
+         return topCard;          
+      }
+
+      // Re-populates Card array with 56 * numPacks. ( Doesn't re-populate masterPack ). 
+      void init ( int numPacks ) {
+         this.numPacks = numPacks;
+         topCard = -1;
+         // Re-populate cards[] with the standard 56 numPacks cards; adjusted for
+         // jokers.
+         cards = new Card[numPacks * 56];
+
+         for (int i = 0; i < numPacks; i++)
+         {
+            for (Card card : masterPack)
+            {
+               topCard++;
+               cards[topCard] = card;
+            }
+         }
+      }
 	// Mix up cards with the help of standard random num generator: 
 	public void shuffle () {
 	   
@@ -637,9 +670,16 @@ class Deck {
 
 	// Accessor for an individual card. Returns a card with errorFlag = true if k is bad. 
 	public Card inspectCard ( int k ) {   
-	
-		return cards[k];    
-	}
+	 if (k >= 0 && k < myCards.length && myCards[k] != null)
+         {
+            return myCards[k];
+         }
+
+         Card errorCard = new Card();
+         errorCard.set(' ', null); 
+         return errorCard;    
+     	 }
+
 
 	//--------------------NEW STUFF FOR DECK----------------------
 	
