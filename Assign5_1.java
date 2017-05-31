@@ -1,49 +1,39 @@
+/**
+Team Logistic Solutions:  Danh Huynh, Brenna Eckel, Steven Hunt, Guadalupe Alejo, Norma Sanchez
+
+Description: Phase 1
+
+- Read and display Card pictures - Read .gif image files as Icons, and attach them to JLabels that we can display on a JFrame.
+
+*/
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Assign5_1
-{
-   // Static for 57 icons and their corresponding labels
-   // normally we would not have a separate label for each card, but
-   // if we want to display all at once using labels, we need to.
+public class Assign5_1 {
 
-   static final int NUM_CARD_IMAGES = 57; // 52+4 jokers + 1 back-of-card image
-   static Icon[] icon = new ImageIcon[NUM_CARD_IMAGES];
+   static final int NUM_CARD_IMAGES = 57; // Total cards (Standard deck, 2 Jokers, and 1 face down)
+   static Icon[] icon = new ImageIcon[NUM_CARD_IMAGES]; // Image label array
 
-   static void loadCardIcons()
-   {
-      // Build the file names ("AC.gif", "2C.gif", "3C.gif", "TC.gif", etc.
-      // in a SHORT loop. For each file name, read it in and use it to
-      // instantiate each of the 57 Icons in the icon[] array.
-
+   // Creates filenames in loop.
+   // Reads in the filenames and instantiate icons in the array. 
+   static void loadCardIcons() {
+]
       short index = 0;
-      for (short j = 0; j < 4; j++)
-      {
-         for (short k = 0; k < 14; k++)
-         {
-            icon[index++] = new ImageIcon("images/" + turnIntIntoCardValue(k)
-               + turnIntIntoCardSuit(j) + ".gif");
+
+      for (short j = 0; j < 4; j++) {
+         for (short k = 0; k < 14; k++) {
+
+            icon[index++] = new ImageIcon("images/" + turnIntIntoCardValue(k) + turnIntIntoCardSuit(j) + ".gif");
          }
       }
+      
       icon[index++] = new ImageIcon("images/BK.gif");
    }
 
-   // Turns 0 - 13 into "A", "2", "3", ... "Q", "K", "X"
-   static String turnIntIntoCardValue(int k)
-   {
-      String cardValue;
-      String[] imageValue = {"A", "2", "3", "4", "5", "6", "7", "8",
-         "9", "T", "J", "Q", "K", "X"};
+   // Change int value into card suits.
+   static String turnIntIntoCardSuit(int j {
 
-      if (k < 0 || k > 13) return "Invalid";
-      
-      cardValue = imageValue[k];
-      return cardValue;
-   }
-
-   // turns 0 - 3 into "C", "D", "H", "S"
-   static String turnIntIntoCardSuit(int j)
-   {
       String cardSuit;
       String[] imageSuit = {"C", "D", "H", "S"};
 
@@ -53,35 +43,45 @@ public class Assign5_1
       return cardSuit;
    }
 
-   // A simple main to display all the JLabels
-   public static void main(String[] args)
-   {
+   // Change int value into card value. 
+   static String turnIntIntoCardValue(int k) {
+
+      String cardValue;
+      String[] imageValue = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "X"};
+
+      if (k < 0 || k > 13) return "Invalid";
+      
+      cardValue = imageValue[k];
+      return cardValue;
+   }
+
+   public static void main(String[] args) {
+
       int k;
 
-      // Prepare the image icon array
       loadCardIcons();
 
-      // Establish main frame in which program will run
+       // JFrame Window: 
       JFrame frmMyWindow = new JFrame("Card Room");
       frmMyWindow.setSize(1150, 650);
       frmMyWindow.setLocationRelativeTo(null);
       frmMyWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      // Set up layout which will control placement of buttons, etc
+       // Button Layout: 
       FlowLayout layout = new FlowLayout(FlowLayout.CENTER, 5, 20);
       frmMyWindow.setLayout(layout);
 
-      // Prepare the image label array
       JLabel[] labels = new JLabel[NUM_CARD_IMAGES];
 
       for (k = 0; k < NUM_CARD_IMAGES; k++)
+
          labels[k] = new JLabel(icon[k]);
 
-      // Place your 3 controls into frame
       for (k = 0; k < NUM_CARD_IMAGES; k++)
+
          frmMyWindow.add(labels[k]);
 
-      // Show everything to the user
+      // Display Window: 
       frmMyWindow.setVisible(true);
    }
 }
