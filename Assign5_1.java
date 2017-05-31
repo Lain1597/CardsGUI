@@ -32,7 +32,7 @@ public class Assign5_1 {
    }
 
    // Change int value into card suits.
-   static String turnIntIntoCardSuit(int j {
+   static String turnIntIntoCardSuit(int j) {
 
       String cardSuit;
       String[] imageSuit = {"C", "D", "H", "S"};
